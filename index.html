@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101014">
+  <meta name="description" content="Discover free open movies on R1 Stream. Browse films, build your watchlist, and pick up where you left off.">
+  <title>R1 Stream — Your next movie night</title>
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+  <script src="js/catalog.js" defer></script>
+  <script src="js/core.js" defer></script>
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to movies</a>
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="R1 Stream home"><span class="brand-mark">R1</span><span>STREAM</span></a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="#home" data-view="home" aria-current="page">Home</a>
+      <a href="#movies" data-view="movies">Movies</a>
+      <a href="#latest" data-view="latest">Latest releases</a>
+      <a href="#watchlist" data-view="watchlist">My list <span id="list-count" class="nav-count" hidden>0</span></a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-button mobile-search" id="search-toggle" aria-label="Search movies" aria-expanded="false" aria-controls="search-wrap" data-icon="search"></button>
+      <label class="search-wrap" id="search-wrap"><span data-icon="search"></span><input type="search" id="search" placeholder="Search movies…" autocomplete="off" aria-label="Search movies"></label>
+      <a class="icon-button admin-link" href="admin.html" aria-label="Open admin" title="Admin"><span data-icon="lock"></span></a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section id="hero" class="hero" aria-label="Featured movie"></section>
+    <section class="browse-section" aria-label="Browse movies">
+      <div class="browse-heading"><div><p class="eyebrow" id="view-eyebrow">FIND YOUR NEXT FAVORITE</p><h1 id="view-title">Made for movie nights.</h1><p id="view-description" class="muted">Open movies. Big stories. All free to watch.</p></div><span class="free-badge"><span data-icon="ticket"></span> No subscription</span></div>
+      <div class="filter-bar"><div id="genres" class="genre-chips" aria-label="Filter by genre"></div><label class="sort-wrap"><span>Sort</span><select id="sort" aria-label="Sort movies"><option value="featured">Featured</option><option value="newest">Newest first</option><option value="title">A–Z</option><option value="shortest">Shortest first</option></select></label></div>
+      <section id="history-section" class="film-section" hidden><div class="section-heading"><h2>Continue exploring</h2><button id="clear-history" class="text-button">Clear history</button></div><div id="history-grid" class="movie-grid history-grid"></div></section>
+      <section class="film-section"><div class="section-heading"><h2 id="grid-heading">The open cinema collection</h2><span id="results-count" class="muted" role="status" aria-live="polite"></span></div><div id="movie-grid" class="movie-grid"></div><div id="empty-state" class="empty-state" hidden><span data-icon="film"></span><h2 id="empty-title">No movies found</h2><p id="empty-text">Try a different title or genre.</p><button class="button button-primary" id="reset-filters">Show all movies</button></div></section>
+    </section>
+  </main>
+
+  <footer class="site-footer"><a class="brand" href="#home"><span class="brand-mark">R1</span><span>STREAM</span></a><p>Free open movies, at your pace.</p><div><button id="credits-button" class="text-button">Film credits</button><button id="install-button" class="text-button" hidden>Install app</button><a href="admin.html">Admin</a></div><small>Independent app. Not affiliated with Netflix or Blender Studio. Videos need an internet connection.</small></footer>
+
+  <dialog id="details-dialog" class="details-dialog" aria-labelledby="details-title"><button class="icon-button dialog-close" data-close="details-dialog" aria-label="Close movie details" data-icon="close"></button><div id="details-content"></div></dialog>
+  <dialog id="player-dialog" class="player-dialog" aria-labelledby="player-title"><div class="player-heading"><div><p class="eyebrow">NOW PLAYING</p><h2 id="player-title"></h2></div><button class="icon-button" data-close="player-dialog" aria-label="Close player" data-icon="close"></button></div><div id="player-mount" class="player-mount"></div><div class="player-footer"><p id="player-note"></p><a id="player-source" href="#" target="_blank" rel="noopener noreferrer">Open original video</a></div><p id="player-error" class="form-error" role="alert" hidden></p></dialog>
+  <dialog id="credits-dialog" class="text-dialog" aria-labelledby="credits-title"><button class="icon-button dialog-close" data-close="credits-dialog" aria-label="Close credits" data-icon="close"></button><p class="eyebrow">THE PEOPLE BEHIND THE PICTURES</p><h2 id="credits-title">Film credits</h2><p>Our starter collection links to the creators’ official films. Artwork is credited below; images are resized and cropped for display.</p><div id="credits-list"></div><p class="muted">R1 Stream does not charge for viewing. Embedded video providers may show their own ads. Catalog edits, your list and viewing history stay in this browser.</p></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <noscript><div class="noscript">Turn on JavaScript to browse and watch movies.</div></noscript>
+</body>
+</html>
