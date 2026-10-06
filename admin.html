@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101014">
+  <meta name="robots" content="noindex">
+  <title>R1 Studio — Manage your movies</title>
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="js/catalog.js" defer></script>
+  <script src="js/core.js" defer></script>
+  <script src="js/admin.js" defer></script>
+</head>
+<body class="admin-body">
+  <header class="site-header admin-header"><a class="brand" href="./"><span class="brand-mark">R1</span><span>STUDIO</span></a><a class="text-button" href="./"><span data-icon="arrow-left"></span> Back to movies</a></header>
+  <main>
+    <section id="login-panel" class="login-panel" aria-labelledby="login-title"><div class="login-symbol" data-icon="lock"></div><p class="eyebrow">YOUR CINEMA, YOUR COLLECTION</p><h1 id="login-title">Welcome back.</h1><p class="muted">Enter your 4-digit admin code to manage movies.</p><form id="login-form"><label for="admin-pin">Admin code</label><input id="admin-pin" class="pin-input" type="password" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" minlength="4" autocomplete="off" required placeholder="••••" aria-describedby="login-error"><p id="login-error" class="form-error" role="alert"></p><button class="button button-primary full-width" type="submit">Unlock studio <span data-icon="lock"></span></button></form><p class="local-notice">This is a browser-only demo lock, not secure authentication. Changes are saved on this device.</p></section>
+
+    <section id="admin-panel" class="admin-panel" hidden aria-labelledby="admin-title">
+      <div class="admin-titlebar"><div><p class="eyebrow">R1 STREAM / STUDIO</p><h1 id="admin-title">Your movie library.</h1><p class="muted">Curate something worth watching.</p></div><div class="button-group"><button class="button button-quiet" id="logout-button">Lock studio</button><button class="button button-primary" id="add-movie"><span data-icon="plus"></span> Add movie</button></div></div>
+      <div class="admin-stats"><div><span id="total-movies">0</span><p>Movies in your library</p></div><div><span id="total-genres">0</span><p>Genres to explore</p></div><div><span>₹0</span><p>Subscription price</p></div></div>
+      <aside class="admin-notice"><span data-icon="info"></span><div><strong>Saved in this browser.</strong><p>These changes do not update other visitors’ catalogs. Export <code>catalog.js</code> and replace <code>js/catalog.js</code> in your repo to publish your collection. Back up edits before clearing browser data. This PIN lock is visible in the source; a shared admin needs a backend.</p></div></aside>
+      <div class="admin-toolbar"><label class="search-wrap"><span data-icon="search"></span><input id="admin-search" type="search" placeholder="Search your library…" aria-label="Search admin library"></label><div class="button-group"><button class="button button-quiet" id="export-json">Export backup</button><button class="button button-quiet" id="import-json">Import backup</button><button class="button button-quiet" id="export-catalog">Export catalog.js</button><input type="file" accept=".json,application/json" id="import-file" hidden></div></div>
+      <div class="admin-list" id="admin-list"></div><p id="admin-empty" class="empty-state" hidden>No matching movies. Add a movie to get started.</p>
+      <div class="admin-bottom"><p class="muted">Use videos you own, have permission to stream, or that are openly licensed.</p><button class="text-button danger-text" id="reset-catalog">Restore starter collection</button></div>
+    </section>
+  </main>
+
+  <dialog id="edit-dialog" class="edit-dialog" aria-labelledby="edit-title"><button class="icon-button dialog-close" data-close="edit-dialog" aria-label="Close movie editor" data-icon="close"></button><p class="eyebrow">CURATE YOUR COLLECTION</p><h2 id="edit-title">Add a movie</h2><form id="movie-form"><input name="id" type="hidden"><div class="form-grid"><label class="span-two">Movie title<input name="title" maxlength="100" required placeholder="Name of the movie"></label><label>Release year<input name="year" type="number" min="1888" max="2100" required></label><label>Length (minutes)<input name="duration" type="number" min="1" max="1000" required></label><label>Genre<select name="genre"><option>Animation</option><option>Adventure</option><option>Comedy</option><option>Drama</option><option>Fantasy</option><option>Horror</option><option>Sci-Fi</option><option>Documentary</option><option>Action</option></select></label><label>Audio language<input name="language" required maxlength="40" placeholder="Hindi, English, or No dialogue"></label><label class="span-two">Video link<input name="video" type="url" required placeholder="https://www.youtube.com/watch?v=…"><small>Official YouTube link or a direct HTTPS .mp4 / .webm file.</small></label><label class="span-two">Poster image<input name="poster" maxlength="2000" placeholder="https://…/poster.jpg (optional)"><small>A public HTTPS image link, or an existing assets/ image.</small></label><label class="span-two">Description<textarea name="description" rows="3" maxlength="1000" required></textarea></label><label>Creator / copyright credit<input name="credit" maxlength="200" required placeholder="Name of the creator"></label><label>License<input name="license" maxlength="100" required placeholder="Owned by me / CC BY 4.0"></label><label class="span-two">License link<input name="licenseUrl" type="url" placeholder="https://creativecommons.org/licenses/… (optional)"></label><label class="span-two">Original source page<input name="source" type="url" placeholder="https://… (optional)"></label><label class="span-two checkbox-label"><input name="featured" type="checkbox"> Feature this movie on the home page</label><label class="span-two checkbox-label"><input name="rights" type="checkbox" required> I own this video or have permission to stream it.</label></div><p id="movie-form-error" class="form-error" role="alert"></p><div class="form-actions"><button class="button button-quiet" type="button" data-close="edit-dialog">Cancel</button><button class="button button-primary" type="submit">Save movie</button></div></form></dialog>
+  <dialog id="confirm-dialog" class="confirm-dialog" aria-labelledby="confirm-title"><h2 id="confirm-title">Delete movie?</h2><p id="confirm-description"></p><div class="form-actions"><button class="button button-quiet" id="confirm-cancel">Cancel</button><button class="button button-primary" id="confirm-yes">Confirm</button></div></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <noscript><div class="noscript">Turn on JavaScript to open the studio.</div></noscript>
+</body>
+</html>
